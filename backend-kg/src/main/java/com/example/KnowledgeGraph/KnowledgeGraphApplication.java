@@ -31,7 +31,7 @@ public class KnowledgeGraphApplication {
 
 	@Bean
 	void createClient(){
-		nlpClient.initClient("24390612","xnAqAkjsM06yXwsgfu9Qbp9m", "sW4iNzTyXxUy6ZKKqzwHmvl7hC9bnEjA");
+		nlpClient.initClient("your nlp key");
 	}
 
 	@Bean
