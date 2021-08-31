@@ -1,0 +1,5 @@
+e1_name,e1_flag,R_des,R_type,e2_name,e2_flag
+wang,Person,xihuan,0,dog,animal
+李四,Person,讨厌,0,张三,Person
+张三,Person,喜欢,0,李四,Person
+张三,Person,讨厌,0,李四,11

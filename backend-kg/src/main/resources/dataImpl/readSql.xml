@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.KnowledgeGraph.data.readMapper">
+
+    <!-- 获取文件表下记录所有文件的list -->
+    <select id="getAllFiles" resultMap="file">
+         select * from files
+    </select>
+
+    <!-- 获取文件表下记录所有filejson的list -->
+    <select id="getAllFileJson" resultMap="filejson">
+         select * from storejson
+    </select>
+
+    <!-- 更新filename表内记录 -->
+    <update id="updateFileName">
+        update files
+        set file_name = #{file_name}
+        where id = #{id}
+    </update>
+
+    <!-- 删除filename表内记录 -->
+    <delete id="deleteFileById">
+        delete from files
+        where id = #{id}
+    </delete>
+
+    <!-- 删除searchrecord表内记录 -->
+    <delete id="deleteRecordByFileId">
+        delete from searchrecord
+        where fileId = #{fileId}
+    </delete>
+
+    <!-- 删除storejson表内记录 -->
+    <delete id="deleteJsonByFileId">
+        delete from storejson
+        where fileId = #{fileId}
+    </delete>
+
+    <!-- 获取文件表下记录某用户的所有filejson的list -->
+    <select id="getAllFilesByUserId" resultMap="file">
+         select * from files
+         where userId = #{userId}
+    </select>
+
+    <!-- 获取文件表下记录所有filejson的list -->
+    <select id="getAllSearchRecord" resultMap="searchrecord">
+         select * from searchrecord
+    </select>
+
+    <!-- 向storejson表中插入新记录 -->
+    <insert id="InsertJson" parameterType="com.example.KnowledgeGraph.po.fileJson" useGeneratedKeys="true" keyProperty="id">
+         insert into storejson(fileId,json)
+         values (#{fileId},#{json})
+    </insert>
+
+    <!-- 向files表中插入新记录 -->
+    <insert id="saveFileInfo" parameterType="com.example.KnowledgeGraph.po.file" useGeneratedKeys="true" keyProperty="id">
+         insert into files(file_name,userId)
+         values (#{file_name},#{userId})
+    </insert>
+
+    <!-- 向searchRecord表中插入新记录 -->
+    <insert id="InsertSearchRecord" parameterType="com.example.KnowledgeGraph.po.SearchRecord" useGeneratedKeys="true" keyProperty="id">
+         insert into searchrecord(fileId,record)
+         values (#{fileId},#{record})
+    </insert>
+
+    <!-- 更新storejson表内记录 -->
+    <update id="updateFileJson">
+        update storejson
+        set json = #{json}
+        where fileId = #{fileId}
+    </update>
+
+    <!-- 更新searchRecord表内记录 -->
+    <update id="updateSearchRecord">
+        update searchrecord
+        set record = #{record}
+        where fileId = #{fileId}
+    </update>
+
+    <!-- 获取storejson表下某fileid的json -->
+    <select id="getFileJsonByFileId" resultType="String">
+         select json from storejson
+         where fileId = #{fileId}
+    </select>
+
+    <!-- 获取通过文件名获取fileid -->
+    <select id="getFileIdByName" resultType="Integer">
+         select id from files
+         where file_name = #{file_name}
+    </select>
+
+    <select id="getNameById" resultType="String">
+         select file_name from files
+         where id = #{file_Id}
+    </select>
+
+    <!-- 获取searchRecord表下某fileId的String -->
+    <select id="getSearchRecordByFileId" resultType="String">
+         select record from searchrecord
+         where fileId = #{fileId}
+    </select>
+
+    <!-- 注册新账号-->
+    <insert id="register" parameterType="com.example.KnowledgeGraph.po.User" useGeneratedKeys="true"  >
+        insert into user(phone,name,password)
+        values(#{phone},#{name},#{password})
+    </insert>
+
+    <!-- 修改密码-->
+
+    <update id="updateAccount" parameterType="com.example.KnowledgeGraph.po.User" >
+        update user
+        set password=#{password}
+        where name=#{name}
+    </update>
+
+    <!-- 获取账号密码 -->
+    <select id="getPassword" resultType="String">
+        select password from user
+        where name = #{name}
+    </select>
+
+    <!-- 获取账号密码 -->
+    <select id="getPWD" resultType="String">
+        select password from user
+        where phone = #{phone} and name = #{name}
+    </select>
+
+    <!-- 获取账号密码 -->
+    <select id="getUserId" resultType="Integer">
+        select uid from user
+        where name = #{name}
+    </select>
+
+    <resultMap id="file" type="com.example.KnowledgeGraph.po.file">
+        <result column="file_name" property="filename"/>
+        <result column="id" property="id"/>
+    </resultMap>
+
+    <resultMap id="filejson" type="com.example.KnowledgeGraph.po.fileJson">
+        <result column="id" property="id"/>
+        <result column="fileId" property="fileId"/>
+        <result column="json" property="json"/>
+    </resultMap>
+
+    <resultMap id="searchrecord" type="com.example.KnowledgeGraph.po.SearchRecord">
+        <result column="id" property="id"/>
+        <result column="fileId" property="fileId"/>
+        <result column="record" property="record"/>
+    </resultMap>
+
+    <resultMap id="user" type="com.example.KnowledgeGraph.po.User">
+        <result column="uid" property="uid"/>
+        <result column="phone" property="phone"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+</mapper>
